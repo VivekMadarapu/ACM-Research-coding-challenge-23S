@@ -15,7 +15,7 @@ The most significant insights I gained were that the dataset is quite small and 
 
 Since the Star type feature has the least imbalance, I decided to use it as my initial target value to test the model, then ran similar tests on the other categorical features. I evaluated the models using the standard **SKLearn** metrics, with the highest focus on accuracy, since it's the most intuitive for classification. This can all be found in *star-classification.ipynb*. Changing *target_value* will change what the model targets for prediction.
 
-As an additional challenge, I also attempted to use XGBoost regression to predict star temperature values and the other numerical features. I evaluated these using R2 scores, since they are a fairly common and useful metric for regression. This can all be found in *star-temp-regression.ipynb*.
+As an additional challenge, I also attempted to use XGBoost regression to predict star temperature values and the other numerical features. I evaluated these using R2 scores, since they are a fairly common and useful metric for regression. This can all be found in *star-regression.ipynb*.
 
 ## Results
 
@@ -71,14 +71,14 @@ Star Type
 
 Overall the accuracy is quite high, but there is evidence of overfitting. The high support scores for M/B spectral class and Red/Blue colors indicate these values were weighted much more heavily than the others. The small size of the dataset is also likely a contributing factor. On the other hand, the Star Type feature prediction is perfect. This may be due to the fact that it's very balanced and the dataset is small enough that it was able to satisfy all the test variables. I expect the perfect accuracy wouldn't hold up with a larger test set.
 
-For the regression model, my R2 score for temperature predictions was around 0.80 on average, which is fairly high. Here are the Average scores for the other numerical features:
+For the regression model, my R2 score for temperature predictions was around 0.80 on average, which is fairly high. Here are the average scores for the other numerical features:
 
     Temperature: 0.80
     Luminosity: 0.53
     Radius: 0.95
     Absolute Magnitude: 0.98
 
-The scores largely correspond to the range of values the model needs to consider for each feature, with a larger range corresponding to a lower accuracy. This is consistent with the temperature results and makes sense considering the small size of the dataset. The scores likely would have been higher with a more comprehensive dataset.
+The scores largely correspond to the range of values the model needs to consider for each feature, with a larger range corresponding to a lower accuracy. This is consistent with the temperature results and makes sense considering the small size of the dataset. Additionally, I didn't report with a very high level of precision since the scores tended to fluctuate significantly for some features. The scores likely would have been higher with a more comprehensive dataset.
 
 ## Sources
 
