@@ -4,11 +4,11 @@
 
 ## Project Overview
 
-This project is an evaluation of machine learning models trained on the star type data set. I haven't had much practice working with tabular data so this was a welcome challenge. I've created a fairly flexible solution to predict various categorical features of the dataset.
+This project is an evaluation of machine learning models trained on the star type data set. I haven't had much practice working with tabular data so this was a welcome challenge. I've created a fairly flexible solution to predict the numerical and categorical features of the dataset.
 
 ## Methodology
 
-The main machine learning framework used in this project was **XGBoost** due to its excellent performance with classification and regression.
+The machine learning framework I chose to use for this project was **XGBoost** due to its excellent performance with classification and regression.
 
 A standard first step is to perform EDA on the dataset.
 The most significant insights I gained were that the dataset is quite small and that the dataset is imbalanced for the Star color and Spectral Class features. This was something to keep in mind, as it could cause overfitting to the majority category in each feature.
