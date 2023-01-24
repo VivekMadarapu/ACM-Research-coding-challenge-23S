@@ -2,68 +2,94 @@
 
 ![image](https://user-images.githubusercontent.com/72369124/211179527-0ee60624-2794-4e13-bf7f-f88b5c950e44.png)
 
-## IMPORTANT: Make sure to create a fork of this repo and share the link on your ACM Research Application Typeform submission. The coding challenge does not have to be completed at the time of you submitting the Typeform application (unless you completed the application last minute!)
+## Project Overview
 
-Note: If it's getting down to the deadline (February 1st at 11:59 PM CST) and you don't think you will be able to finish your project on time, just complete whatever you have! Please do not work on the challenge after the deadline, but if you do need a few extra hours, make sure your challenge is done before interviews begin tomorrow (Feb 2nd).
+This project is an evaluation of machine learning models trained on the star type data set. I haven't had much practice working with tabular data so this was a welcome challenge. I've created a fairly flexible solution to predict various categorical features of the dataset.
 
-This semester's challenge is especially open-ended. [Please refer to this dataset](https://www.kaggle.com/datasets/deepu1109/star-dataset) on Kaggle called "Star dataset to predict star types".  It contains information about 240 stars and various properties taken from "Stars and Galaxies" by Seeds and Backman. Each row contains 7 pieces of information about a star, such as its temperature, luminosity, radius, absolute magnitude, star type, star color, and spectral class.
+## Methodology
 
-Please note that the star type, denoted as integers, are translated as the following:
-- Brown Dwarf -> Star Type = 0
-- Red Dwarf -> Star Type = 1
-- White Dwarf -> Star Type = 2
-- Main Sequence -> Star Type = 3
-- Supergiant -> Star Type = 4
-- Hypergiant -> Star Type = 5
+The main machine learning framework used in this project was **XGBoost** due to its excellent performance with classification and regression.
 
----
+A standard first step is to perform EDA on the dataset.
+The most significant insights I gained were that the dataset is quite small and that the dataset is imbalanced for the Star color and Spectral Class features. This was something to keep in mind, as it could cause overfitting to the majority category in each feature.
 
-## INSTRUCTIONS: Please read this carefully, do not skim this!
+Since the Star type feature has the least imbalance, I decided to use it as my initial target value to test the model, then ran similar tests on the other categorical features. I evaluated the models using the standard **SKLearn** metrics, with the highest focus on accuracy, since it's the most intuitive for classification. This can all be found in *star-classification.ipynb*. Changing *target_value* will change what the model targets for prediction.
 
-### Here's the coding challenge: **What can you do with all of this data?** Yes, this is an **OPEN-ENDED** question and your answer should be a brief report, showcasing your skills. Can you find a pattern, answer a question, or create a visualization? In case nothing comes to mind, here are some ideas, with varying complexity:
+As an additional challenge, I also attempted to use XGBoost regression to predict star temperature values and the other numerical features. I evaluated these using R2 scores, since they are a fairly common and useful metric for regression. This can all be found in *star-temp-regression.ipynb*.
 
-- What is the most common star type in the data?
-- What common patterns do you notice between any two properties? Ex: Is there a relationship between the star color and temperature?
-- What properties are the most influential in classifying a star's type?
-- Can you make a similar graph as the one shown in Kaggle to showcase the data as a Hertzsprung-Russell Diagram?
-- Train a machine learning model to then predict the star type of a row of data (without the star type field) and find the model's accuracy.
-Bonus: Can you find the row of data that most closely resembles our star, the Sun?
+## Results
 
-However, we strongly encourage you to come up with your own problem to solve! This is for you to showcase your skills!
+Overall the results were excellent. The following were my highest prediction statistics for each category:
 
-You can use any programming language, framework, or library you want, but we recommend [creating a notebook in Kaggle](https://www.kaggle.com/docs/notebooks) and using Python. This will run in your browser, interlaces code with documentation, allows you to import the Stars dataset easily by pressing the "Add data" button, and gives you access to Python's high-quality, high-level libraries for working with data. [Learn more about data science in Python.](https://www.w3schools.com/datascience/ds_python.asp)
+Star color
 
----
+                     precision    recall  f1-score   support
 
-## How to create your solution repo **(COMPLETE STEPS #1 and #2 BEFORE YOU SUBMIT YOUR APPLICATION, AND PUT THE LINK IN THE APPLICATION)**
+               Blue       0.89      1.00      0.94        16
+         Blue White       0.00      0.00      0.00         1
+         Blue white       1.00      0.00      0.00         2
+         Blue-white       1.00      0.80      0.89         5
+                Red       1.00      1.00      1.00        21
+              White       0.00      1.00      0.00         0
+    Yellowish White       0.00      1.00      0.00         0
+              white       1.00      0.00      0.00         1
+       yellow-white       1.00      1.00      1.00         2
 
-1. [Create a **public** fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) of this repository and name it  `ACM-Research-coding-challenge-23S` (click the "Fork" button in the top right).
+           accuracy                           0.90        48
+          macro avg       0.65      0.64      0.43        48
+       weighted avg       0.94      0.90      0.89        48
 
-2. Put the link to your fork in your ACM Research application in the question where it asks to do so. **This can just be a empty repo as you have until February 2 to work on your coding challenge in this repository**
+Spectral Class
 
-3. Replace this README file with a description ([written in Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/about-writing-and-formatting-on-github)) of your solution. Regardless of your success, describe the problem you set out to solve and how you did it. Split it up into sections with headers, and, if relevant, include figures.
+                  precision    recall  f1-score   support
 
-4. Make sure to include all relevant files in your fork. If you made the project in a Kaggle notebook, click **File** → **Download Notebook** to download it as an `.ipynb` file.
+               A       0.75      1.00      0.86         3
+               B       1.00      0.90      0.95        10
+               F       1.00      0.50      0.67         2
+               K       1.00      1.00      1.00         1
+               M       1.00      1.00      1.00        26
+               O       0.86      1.00      0.92         6
 
-4. You may have to "clone" the fork you made to edit files locally on your computer and "push" them to GitHub. Learn how to do that [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
+        accuracy                           0.96        48
+       macro avg       0.93      0.90      0.90        48
+    weighted avg       0.97      0.96      0.96        48
 
-5. Make sure your GitHub repo has everything important, including your report, any code you used, graphs, etc. You should not be working on this after the deadline (Feb 2).
+Star Type
 
+                  precision    recall  f1-score   support
 
-## No collaboration policy
+               0       1.00      1.00      1.00         7
+               1       1.00      1.00      1.00         8
+               2       1.00      1.00      1.00        10
+               3       1.00      1.00      1.00         6
+               4       1.00      1.00      1.00        13
+               5       1.00      1.00      1.00         4
 
-**You may not collaborate with anyone on this challenge.** You _are_ allowed (and encouraged) to use internet documentation. If you use existing code (either from Github, Stack Overflow, or other sources), **please cite your sources in the README**.
+        accuracy                           1.00        48
+       macro avg       1.00      1.00      1.00        48
+    weighted avg       1.00      1.00      1.00        48
 
-## Timing
+Overall the accuracy is quite high, but there is evidence of overfitting. The high support scores for M/B spectral class and Red/Blue colors indicate these values were weighted much more heavily than the others. The small size of the dataset is also likely a contributing factor. On the other hand, the Star Type feature prediction is perfect. This may be due to the fact that it's very balanced and the dataset is small enough that it was able to satisfy all the test variables. I expect the perfect accuracy wouldn't hold up with a larger test set.
 
-Please don't spend too long on this project: **60 to 90 minutes** is reasonable. It's okay to put more time into your submission than that, but we don't expect you to get that much done; we really don't want this challenge to be a burden!
+For the regression model, my R2 score for temperature predictions was around 0.80 on average, which is fairly high. Here are the Average scores for the other numerical features:
 
-If you're *completely new* to this kind of project, however, it will likely take you more than 90 minutes. This is a *densely useful* project to go through (you will learn a lot), so we believe this is justified.
+    Temperature: 0.80
+    Luminosity: 0.53
+    Radius: 0.95
+    Absolute Magnitude: 0.98
 
-## Assessment criteria
+The scores largely correspond to the range of values the model needs to consider for each feature, with a larger range corresponding to a lower accuracy. This is consistent with the temperature results and makes sense considering the small size of the dataset. The scores likely would have been higher with a more comprehensive dataset.
 
-Submissions will be evaluated holistically, in combination with the rest of your application. We will consider your effort, use of external resources, how you approached the problem, and presentation, among other considerations.
+## Sources
 
-## Support and questions
+The star dataset itself is sourced from kaggle from user Deepraj Baidya:
+https://www.kaggle.com/datasets/deepu1109/star-dataset
 
-Feel free to ask for clarifications in the #research-qna channel in the [ACM UTD Discord server](https://discord.gg/nJxRdKdG4d)! You can also directly message ACM Research Co-Directors Pranav Nair or Sisi Aarukapalli-Rose on the ACM Discord server.
+XGBoost Documentation:
+https://xgboost.readthedocs.io/en/stable/
+
+SKLearn Documentation:
+https://scikit-learn.org/0.21/documentation.html
+
+Credit to user Jefferson Santos on StackOverflow for the LabelEncoder solution used in the star classification portion of this project:
+https://stackoverflow.com/a/72132612
